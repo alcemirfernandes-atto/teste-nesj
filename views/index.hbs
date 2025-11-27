@@ -1,0 +1,236 @@
+<html lang='pt-BR'>
+  <head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width,initial-scale=1' />
+    <title>API — Status</title>
+    <style>
+      :root {
+        --bg: #0f1724;
+        --card: #0b1220;
+        --muted: #9aa4b2;
+        --accent: #60a5fa;
+        --glass: rgba(255, 255, 255, 0.04);
+        --success: #34d399;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          'Segoe UI',
+          Roboto,
+          'Helvetica Neue',
+          Arial;
+        background:
+          radial-gradient(
+            1200px 600px at 10% 10%,
+            rgba(96, 165, 250, 0.08),
+            transparent
+          ),
+          radial-gradient(
+            900px 500px at 90% 90%,
+            rgba(99, 102, 241, 0.06),
+            transparent
+          ),
+          var(--bg);
+        color: #e6eef8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 32px;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 920px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
+        padding: 28px;
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(6px);
+      }
+
+      .left h1 {
+        margin: 0 0 8px 0;
+        font-size: 1.75rem;
+        letter-spacing: -0.02em;
+      }
+      .left p.lead {
+        margin: 0 0 18px 0;
+        color: var(--muted);
+      }
+
+      .status {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--success);
+        box-shadow: 0 6px 18px rgba(52, 211, 153, 0.14);
+      }
+
+      .meta {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+      }
+      .meta .chip {
+        background: var(--glass);
+        color: var(--muted);
+        padding: 8px 10px;
+        border-radius: 10px;
+        font-size: 0.875rem;
+        border: 1px solid rgba(255, 255, 255, 0.02);
+      }
+
+      .right {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.015),
+          rgba(255, 255, 255, 0.01)
+        );
+        border-radius: 12px;
+        padding: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.02);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .right .time {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #dff6ff;
+      }
+      .right small {
+        color: var(--muted);
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 10px 14px;
+        border-radius: 10px;
+        background: linear-gradient(90deg, var(--accent), #7c3aed);
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+      }
+
+      .endpoint {
+        background: rgba(255, 255, 255, 0.02);
+        padding: 12px;
+        border-radius: 8px;
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace;
+        color: #cfe9ff;
+        font-size: 0.9rem;
+      }
+
+      footer {
+        grid-column: 1 / -1;
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 0.85rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      @media (max-width: 860px) {
+        .card {
+          grid-template-columns: 1fr;
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class='card' role='main' aria-live='polite'>
+      <section class='left'>
+        <h1>API Rodando ✅</h1>
+        <p class='lead'>{{message}}</p>
+
+        <div class='status' aria-hidden>
+          <div class='dot' title='online'></div>
+          <div>
+            <div style='font-weight:700'>Servidor:
+              <span style='font-weight:600'>Online</span></div>
+            <div style='color:var(--muted); font-size:0.95rem'>Escutando em
+              <strong>http://localhost:3000</strong></div>
+          </div>
+        </div>
+
+        <div style='margin-top:18px'>
+          <div style='margin-bottom:8px; color:var(--muted)'>Endpoints úteis</div>
+          <div class='endpoint'>GET /user — listar usuários</div>
+          <div class='endpoint' style='margin-top:6px'>GET /user/:id — buscar
+            por id</div>
+        </div>
+      </section>
+
+      <aside class='right' aria-label='status panel'>
+        <div>
+          <div>Última verificação:</div>
+          <span id='lastCheck'>—</span>
+        </div>
+
+        <div>
+          <button class='btn' id='healthBtn' type='button'>Verificar /health</button>
+        </div>
+
+        <div style='margin-top:auto'>
+
+        </div>
+      </aside>
+
+      <footer>
+        <div>Projeto • API</div>
+        <div>
+          <div class='time' id='now'>--:--:--</div>
+          <small id='date'>--</small></div>
+
+      </footer>
+    </main>
+
+    <script>
+      function pad(n){return n<10? '0'+n : n} function updateClock(){ const d =
+      new Date(); document.getElementById('now').textContent = pad(d.getHours())
+      + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
+      document.getElementById('date').textContent = d.toLocaleDateString(); }
+      setInterval(updateClock, 1000); updateClock();
+      document.getElementById('healthBtn').addEventListener('click', async () =>
+      { const btn = document.getElementById('healthBtn'); btn.textContent =
+      'Verificando…'; btn.disabled = true; try { const res = await
+      fetch('/health'); await res.text();
+      document.getElementById('lastCheck').textContent = new
+      Date().toLocaleTimeString() + ' — ' + (res.ok ? 'OK' : 'NOK'); } catch (e)
+      { document.getElementById('lastCheck').textContent = 'erro'; } finally {
+      btn.textContent = 'Verificar /health'; btn.disabled = false; } });
+    </script>
+  </body>
+</html>

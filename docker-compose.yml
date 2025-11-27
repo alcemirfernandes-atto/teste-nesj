@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: dev_api
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - '3000:3000'
+    environment:
+      - JWT_ACCESS_SECRET=chave-secreta-acsess-teste
+      - JWT_REFRESH_SECRET=chave-secreta-refresh-teste
