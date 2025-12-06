@@ -23,11 +23,11 @@ export class UserService {
     return this.repo.findById(id);
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
+  update(id: string, updateUserDto: Partial<UpdateUserDto>) {
     return this.repo.update(id, updateUserDto);
   }
 
-  remove(id: string) {
-    return this.repo.remove(id);
+  delete(id: string) {
+    return this.repo.delete(id);
   }
 }

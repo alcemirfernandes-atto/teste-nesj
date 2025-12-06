@@ -2,12 +2,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
 import { AppController } from './app.controller';
 import { UserModule } from './modules/user/user.module';
-import { AppDataSource } from './infra/data-source';
+import AppDataSource from './infra/data-source';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { ProdutoModule } from './modules/produto/produto.module';
 
 @Module({
   imports: [
@@ -20,6 +20,7 @@ import { ConfigModule } from '@nestjs/config';
     }),
     UserModule,
     AuthModule,
+    ProdutoModule,
   ],
   controllers: [AppController],
   providers: [],

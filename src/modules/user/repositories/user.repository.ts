@@ -16,7 +16,7 @@ export class UserRepository implements IRepository<User> {
   async update(id: string, data: Partial<UpdateUserDto>): Promise<void> {
     await this.repo.update(id, data);
   }
-  async remove(id: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     await this.repo.delete(id);
   }
 
