@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { IRepository } from '../../../@shared/repositories/repository.interface';
 import { Produto } from '../entities/produto.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 
 @Injectable()
 export class ProdutoRepository implements IRepository<Produto> {
@@ -21,6 +21,15 @@ export class ProdutoRepository implements IRepository<Produto> {
 
   async delete(id: string): Promise<void> {
     await this.repo.delete(id);
+  }
+
+  async findByName(name: string, take = 20): Promise<Produto[] | null> {
+    return this.repo.find({
+      where: {
+        name: Like(`%${name}%`),
+      },
+      take,
+    });
   }
 
   async findAll(): Promise<Produto[]> {

@@ -8,6 +8,7 @@ import AppDataSource from './infra/data-source';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { ProdutoModule } from './modules/produto/produto.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ProdutoModule } from './modules/produto/produto.module';
     UserModule,
     AuthModule,
     ProdutoModule,
+    DashboardModule
   ],
   controllers: [AppController],
   providers: [],

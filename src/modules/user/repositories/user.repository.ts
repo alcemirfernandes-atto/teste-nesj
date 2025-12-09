@@ -37,6 +37,13 @@ export class UserRepository implements IRepository<User> {
     return this.repo.findOne({ where: { id } });
   }
 
+  async findByEmail(email: string): Promise<User | null> {
+    return this.repo
+      .createQueryBuilder('user')
+      .where('user.email = :email', { email })
+      .getOne();
+  }
+
   async findByEmailWithPassword(email: string): Promise<User | null> {
     return this.repo
       .createQueryBuilder('user')

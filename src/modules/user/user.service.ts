@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRepository } from './repositories/user.repository';
@@ -8,6 +12,12 @@ export class UserService {
   constructor(private readonly repo: UserRepository) {}
 
   async create(dto: CreateUserDto) {
+    const existing = await this.repo.findByEmail(dto.email);
+
+    if (existing) {
+      throw new ConflictException('E-mail já está em uso');
+    }
+
     const hashed = await bcrypt.hash(dto.senha, 10);
     return this.repo.create({
       ...dto,
@@ -19,15 +29,23 @@ export class UserService {
     return this.repo.findAll();
   }
 
-  findOne(id: string) {
-    return this.repo.findById(id);
+  async findOne(id: string) {
+    const user = await this.repo.findById(id);
+
+    if (!user) {
+      throw new NotFoundException('Usuario inexistente');
+    }
+
+    return user;
   }
 
-  update(id: string, updateUserDto: Partial<UpdateUserDto>) {
+  async update(id: string, updateUserDto: Partial<UpdateUserDto>) {
+    await this.findOne(id);
     return this.repo.update(id, updateUserDto);
   }
 
-  delete(id: string) {
+  async delete(id: string) {
+    await this.findOne(id);
     return this.repo.delete(id);
   }
 }

@@ -13,8 +13,8 @@ export class AuthController {
     return this.authService.singIn(loginPayload);
   }
 
-  @Post('refresh')
   @UseGuards(AuthGuard('refresh-jwt'))
+  @Post('refresh')
   refresh(@Body('refreshToken') token: string) {
     return this.authService.refreshToken(token);
   }
