@@ -67,14 +67,14 @@ export default function Dashboard() {
   return (
     <>
       <NavBar title="Dashboard" arrowback={true}>
-        <div className="min-h-screen  bg-cyan-100 p-10">
-          <div className="grid grid-cols-4 pb-8 gap-6 text-gray-100">
+        <div className=" p-10">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6 pb-8 text-gray-100">
             <Card title="Usuários" value={stats.users} />
             <Card title="Vendas" value={stats.sales} />
             <Card title="Produtos" value={stats.produts} />
             <Card title="Estoque Total" value={stats.estoqueTotal} />
           </div>
-          <div className="flex flex-row gap-8">
+          <div className="flex flex-wrap gap-8">
             <LineChart width={400} height={250} data={data}>
               <Line type="monotone" dataKey="sales" stroke="#82ca9d" />
               <XAxis dataKey="day" />

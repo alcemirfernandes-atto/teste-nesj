@@ -1,7 +1,21 @@
 "use client";
 
 import NavBar from "@/app/components/baseLayout";
-import { Button, IconButton, LinearProgress } from "@mui/material";
+import {
+  Button,
+  Card,
+  Divider,
+  IconButton,
+  LinearProgress,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip,
+} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -70,46 +84,69 @@ export default function ProdutoPage() {
     );
   }
   return (
-    <div className="w-screen min-h-screen bg-cyan-100">
+    <div>
       <NavBar title="Produto" arrowback={true}>
-        <div className=" flex justify-end mt-4 mr-8 ">
-          <Button onClick={() => handleCreate()}>
-            <AddIcon className="text-white" />
-            Adcionar
-          </Button>
-        </div>
-        <div className=" flex justify-center  ">
-          <div className=" flex justify-center w-250 mt-4 m-8 bg-white rounded-xl">
-            <div className="flex justify-center w-200 ">
-              <table>
-                <thead>
-                  <tr>
-                    <th className="p-4">Nome</th>
-                    <th className="p-4">Cor</th>
-                    <th className="p-4">Estoque</th>
-                    <th className="p-4">Ações</th>
-                  </tr>
-                </thead>
+        <div className=" flex justify-center">
+          <div className=" flex justify-center bg-white rounded-xl pt-8 p-5">
+            <TableContainer component={Paper}>
+              <Table
+                sx={{
+                  width: "100%",
+                  maxWidth: { xs: "100%", sm: 500, md: 800 },
+                }}
+                aria-label="simple table"
+              >
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Nome</TableCell>
+                    <TableCell
+                      sx={{
+                        width: 30,
+                      }}
+                    >
+                      Cor
+                    </TableCell>
+                    <TableCell>Estoque</TableCell>
 
-                <tbody>
+                    <TableCell align="center">
+                      <Tooltip title="Adicionar">
+                        <Button onClick={() => handleCreate()}>
+                          <AddIcon className="text-white" />
+                        </Button>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
                   {products.map((p, index) => (
-                    <tr key={index}>
-                      <td className="p-2">{p.name}</td>
-                      <td className="p-2">{p.color ?? "-"}</td>
-                      <td className="p-2">{p.estoque}</td>
-                      <td className="p-2">
-                        <IconButton onClick={() => handleEdit(p)}>
-                          <EditIcon className="text-yellow-500" />
-                        </IconButton>
-                        <IconButton onClick={() => handleDelete(p)}>
-                          <DeleteIcon className="text-red-500" />
-                        </IconButton>
-                      </td>
-                    </tr>
+                    <TableRow
+                      key={index}
+                      sx={{
+                        "&:last-child td, &:last-child th": { border: 0 },
+                      }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {p.name}
+                      </TableCell>
+                      <TableCell>{p.color}</TableCell>
+                      <TableCell align="center">{p.estoque}</TableCell>
+                      <TableCell>
+                        <Tooltip title="Editar">
+                          <IconButton onClick={() => handleEdit(p)}>
+                            <EditIcon className="text-yellow-500" />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Deletar">
+                          <IconButton onClick={() => handleDelete(p)}>
+                            <DeleteIcon className="text-red-500" />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                    </TableRow>
                   ))}
-                </tbody>
-              </table>
-            </div>
+                </TableBody>
+              </Table>
+            </TableContainer>
           </div>
         </div>
       </NavBar>

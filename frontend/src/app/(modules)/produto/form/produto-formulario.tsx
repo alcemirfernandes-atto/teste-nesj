@@ -42,7 +42,19 @@ export default function ProdutoForm({
 
   const dialogTitle = initialData ? "Atualizar Produto" : "Criar Produto";
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog
+      slotProps={{
+        paper: {
+          sx: {
+            borderRadius: 4,
+            p: 2,
+            boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
+          },
+        },
+      }}
+      open={open}
+      onClose={onClose}
+    >
       <DialogTitle>{dialogTitle}</DialogTitle>
       <DialogContent>
         <form>

@@ -10,6 +10,8 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -24,8 +26,14 @@ interface SideBarProps {
 }
 
 const SideBar = ({ open, toggleDrawer }: SideBarProps) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   const router = useRouter();
   function redireciona(rota: string) {
+    if (isMobile) {
+      toggleDrawer(false)();
+    }
     switch (rota) {
       case "venda":
         router.push(RoutePages.VENDA);
@@ -50,7 +58,7 @@ const SideBar = ({ open, toggleDrawer }: SideBarProps) => {
   }
 
   const DrawerList = (
-    <Box className="w-70 bg-black h-full">
+    <Box className="w-72  bg-black h-full">
       <div className=" flex mt-5 mb-5 mr-4 justify-around">
         <Image src={"/vercel.svg"} alt="Logo" width={45} height={45} />
         <h1 className="text-3xl text-white">Menu</h1>
@@ -66,7 +74,12 @@ const SideBar = ({ open, toggleDrawer }: SideBarProps) => {
       <List>
         {["home", "venda", "produto", "dashboard"].map((text) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton onClick={() => redireciona(text)}>
+            <ListItemButton
+              onClick={() => {
+                toggleDrawer(false);
+                redireciona(text);
+              }}
+            >
               <ListItemText
                 className=" text-white"
                 primary={text.charAt(0).toUpperCase() + text.slice(1)}
@@ -103,16 +116,14 @@ const SideBar = ({ open, toggleDrawer }: SideBarProps) => {
           <ChevronRightIcon />
         </Button>
       </div>
-      <div>
-        <Drawer
-          variant="persistent"
-          role="presentation"
-          open={open}
-          onClose={toggleDrawer(false)}
-        >
-          {DrawerList}
-        </Drawer>
-      </div>
+      <Drawer
+        variant={isMobile ? "temporary" : "persistent"}
+        role="presentation"
+        open={open}
+        onClose={toggleDrawer(false)}
+      >
+        {DrawerList}
+      </Drawer>
     </>
   );
 };

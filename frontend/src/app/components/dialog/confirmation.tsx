@@ -22,7 +22,19 @@ export default function ConfirmDialog({
   onConfirm,
 }: ConfirmDialogProps) {
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      slotProps={{
+        paper: {
+          sx: {
+            borderRadius: 4,
+            p: 2,
+            boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
+          },
+        },
+      }}
+    >
       <DialogTitle>Confirmação</DialogTitle>
       <DialogContent>Tem certeza?</DialogContent>
       <DialogActions>
