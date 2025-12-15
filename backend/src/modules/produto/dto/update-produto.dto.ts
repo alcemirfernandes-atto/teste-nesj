@@ -7,4 +7,6 @@ export class UpdateProdutoDto {
   color: string;
   @ApiProperty()
   estoque: number;
+  @ApiProperty()
+  preco: number;
 }

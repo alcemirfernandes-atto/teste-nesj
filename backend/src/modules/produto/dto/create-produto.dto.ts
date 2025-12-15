@@ -7,4 +7,8 @@ export class CreateProdutoDto {
   color: string;
   @ApiProperty()
   estoque: number;
+  @ApiProperty()
+  codBa: string;
+  @ApiProperty()
+  preco: number;
 }

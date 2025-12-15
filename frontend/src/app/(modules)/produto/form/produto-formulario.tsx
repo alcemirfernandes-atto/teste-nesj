@@ -8,8 +8,10 @@ import {
   DialogActions,
   Button,
   Input,
+  TextField,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { NumericFormat } from "react-number-format";
 
 interface ProdutoFormProps {
   open: boolean;
@@ -27,16 +29,24 @@ export default function ProdutoForm({
   const [formData, setFormData] = useState<Partial<ProdutoCreate>>({
     name: "",
     color: "",
+    codBa: "",
     estoque: 0,
   });
+
+  const [price, setPrice] = useState("0");
 
   useEffect(() => {
     if (!open) return;
 
     if (initialData) {
       setTimeout(() => setFormData(initialData), 0);
+      setTimeout(() => setPrice(initialData.preco.toString()), 0);
     } else {
-      setTimeout(() => setFormData({ name: "", color: "", estoque: 0 }), 0);
+      setTimeout(
+        () => setFormData({ name: "", color: "", estoque: 0, codBa: "" }),
+        0
+      );
+      setTimeout(() => setPrice(""), 0);
     }
   }, [initialData, open]);
 
@@ -76,6 +86,22 @@ export default function ProdutoForm({
               sx={{ mb: 2 }}
             />
             <Input
+              placeholder="Cod Barra"
+              value={formData.codBa}
+              onChange={(e) =>
+                setFormData({ ...formData, codBa: e.target.value })
+              }
+              sx={{ mb: 2 }}
+            />
+            <Input
+              type="text"
+              placeholder="Preço"
+              value={price}
+              inputProps={{ step: "0.01", min: 0 }}
+              onChange={(e) => setPrice(e.target.value)}
+              sx={{ mb: 2 }}
+            />
+            <Input
               type="number"
               placeholder="Estoque"
               value={formData.estoque}
@@ -92,7 +118,14 @@ export default function ProdutoForm({
           Cancelar
         </Button>
         <Button
-          onClick={() => onConfirm(formData)}
+          onClick={() => {
+            const preco = Number(price.replace(",", "."));
+
+            onConfirm({
+              ...formData,
+              preco,
+            });
+          }}
           sx={{ backgroundColor: "green" }}
         >
           Gravar

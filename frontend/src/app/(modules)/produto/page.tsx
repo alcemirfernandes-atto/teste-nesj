@@ -104,8 +104,9 @@ export default function ProdutoPage() {
                     >
                       Cor
                     </TableCell>
+                    <TableCell>Cod Barra</TableCell>
+                    <TableCell>Preço</TableCell>
                     <TableCell>Estoque</TableCell>
-
                     <TableCell align="center">
                       <Tooltip title="Adicionar">
                         <Button onClick={() => handleCreate()}>
@@ -127,7 +128,9 @@ export default function ProdutoPage() {
                         {p.name}
                       </TableCell>
                       <TableCell>{p.color}</TableCell>
-                      <TableCell align="center">{p.estoque}</TableCell>
+                      <TableCell align="center">{p.codBa}</TableCell>
+                      <TableCell>{p.preco}</TableCell>
+                      <TableCell>{p.estoque}</TableCell>
                       <TableCell>
                         <Tooltip title="Editar">
                           <IconButton onClick={() => handleEdit(p)}>

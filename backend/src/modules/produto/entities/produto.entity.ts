@@ -12,5 +12,11 @@ export class Produto {
   color: string;
 
   @Column()
+  codBa: string;
+
+  @Column()
+  preco: number;
+
+  @Column()
   estoque: number;
 }
