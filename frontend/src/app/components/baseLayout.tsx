@@ -26,7 +26,7 @@ export default function NavBar({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const [open, setOpen] = useState(!isMobile);
+  const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -41,7 +41,7 @@ export default function NavBar({
     <div className="flex flex-col">
       <SideBar toggleDrawer={toggleDrawer} open={open}></SideBar>
       <div style={mainContentStyle}>
-        <nav className=" min-w-svh bg-black flex flex-row items-center h-15 gap-4 p-4">
+        <nav className=" bg-black flex flex-row items-center h-15 gap-4 p-4">
           {img != "" && <Image src={img} alt="Logo" width={45} height={45} />}
           {arrowback && (
             <IconButton onClick={() => router.back()}>

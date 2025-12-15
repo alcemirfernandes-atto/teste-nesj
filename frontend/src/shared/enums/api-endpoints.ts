@@ -9,4 +9,5 @@ export enum ApiEndpoints {
   USER = "/user",
   DASHBOARD = "/stats",
   SEARCH_PRODUTO = "/produto/search/",
+  VENDA = "/venda",
 }
